@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
     // Validate URL
     try {
       new URL(imageUrl)
-    } catch (e) {
+    } catch {
       return NextResponse.json(
         { error: "Invalid image URL" },
         { status: 400 }
