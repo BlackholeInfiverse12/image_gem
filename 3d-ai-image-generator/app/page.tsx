@@ -19,7 +19,7 @@ export default function Home() {
 
   const [isGenerating, setIsGenerating] = useState(false)
   const [userInteracting, setUserInteracting] = useState(false)
-  const controlsRef = useRef<any>(null)
+  const controlsRef = useRef<any>(null) // eslint-disable-line @typescript-eslint/no-explicit-any
 
   const handleImageGenerated = (imageUrl: string, prompt: string) => {
     const newImage = {
@@ -57,8 +57,14 @@ export default function Home() {
           <Environment preset="city" />
 
           {/* 3D Image Displays - Much larger and further away */}
-          {generatedImages.map((image) => (
-            <ImageDisplay3D key={image.id} imageUrl={image.url} position={image.position} prompt={image.prompt} />
+          {generatedImages.map((image, index) => (
+            <ImageDisplay3D
+              key={image.id}
+              url={image.url}
+              position={image.position}
+              prompt={image.prompt}
+              index={index}
+            />
           ))}
 
           {/* Floating Title */}
@@ -74,8 +80,7 @@ export default function Home() {
           <Html position={[-6, 0, 0]} center distanceFactor={8} transform occlude>
             <ImageGenerator
               onImageGenerated={handleImageGenerated}
-              isGenerating={isGenerating}
-              setIsGenerating={setIsGenerating}
+              onGeneratingChange={setIsGenerating}
             />
           </Html>
 

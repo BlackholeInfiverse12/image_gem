@@ -4,13 +4,13 @@ import { Loader2 } from "lucide-react"
 
 interface ImageGeneratorProps {
   onImageGenerated: (imageUrl: string, prompt: string) => void
+  onGeneratingChange?: (isGenerating: boolean) => void
 }
 
-export default function ImageGenerator({ onImageGenerated }: ImageGeneratorProps) {
+export default function ImageGenerator({ onImageGenerated, onGeneratingChange }: ImageGeneratorProps) {
   const [prompt, setPrompt] = useState("")
   const [isGenerating, setIsGenerating] = useState(false)
   const [error, setError] = useState("")
-  const [lastService, setLastService] = useState<string | null>(null)
   const [lastGeneratedImage, setLastGeneratedImage] = useState<string | null>(null)
   const [lastGeneratedPrompt, setLastGeneratedPrompt] = useState<string | null>(null)
   const [isDownloading, setIsDownloading] = useState(false)
@@ -39,6 +39,7 @@ export default function ImageGenerator({ onImageGenerated }: ImageGeneratorProps
     }
 
     setIsGenerating(true)
+    onGeneratingChange?.(true)
     setError("")
 
     try {
@@ -65,7 +66,6 @@ export default function ImageGenerator({ onImageGenerated }: ImageGeneratorProps
         fallback: "⚠️ Using fallback service",
       }
 
-      setLastService(data.service)
       setLastGeneratedImage(data.imageUrl)
       setLastGeneratedPrompt(prompt.trim())
 
@@ -84,6 +84,7 @@ export default function ImageGenerator({ onImageGenerated }: ImageGeneratorProps
       console.error("Image generation error:", err)
     } finally {
       setIsGenerating(false)
+      onGeneratingChange?.(false)
     }
   }
 

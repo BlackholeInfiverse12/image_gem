@@ -3,6 +3,7 @@ import { useFrame } from "@react-three/fiber"
 import { Html } from "@react-three/drei"
 import Image from "next/image"
 import { easing } from "maath"
+import * as THREE from "three"
 
 interface ImageDisplay3DProps {
   url: string
@@ -18,7 +19,7 @@ export default function ImageDisplay3D({ url, prompt, position, index }: ImageDi
   const meshRef = useRef<THREE.Mesh>(null)
 
   // Handle hover animations
-  useFrame((state, delta) => {
+  useFrame((_, delta) => {
     if (meshRef.current) {
       // Scale up slightly when hovered
       easing.damp3(

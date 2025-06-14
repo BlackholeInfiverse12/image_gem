@@ -46,7 +46,7 @@ export async function POST(request: NextRequest) {
           // Use a demo endpoint that generates images based on text
           const seed =
             Math.abs(
-              prompt.split("").reduce((a, b) => {
+              prompt.split("").reduce((a: number, b: string) => {
                 a = (a << 5) - a + b.charCodeAt(0)
                 return a & a
               }, 0),
@@ -60,7 +60,7 @@ export async function POST(request: NextRequest) {
         name: "lorem-picsum",
         generate: async () => {
           // Use Lorem Picsum with prompt-based seed for consistency
-          const hash = prompt.split("").reduce((a, b) => {
+          const hash = prompt.split("").reduce((a: number, b: string) => {
             a = (a << 5) - a + b.charCodeAt(0)
             return a & a
           }, 0)
